@@ -1,0 +1,33 @@
+Um grafo é uma estrutura de dados que consiste em vértices (também chamados de nós) e arestas que conectam esses vértices. As propriedades de um grafo podem variar dependendo do tipo de grafo e de suas características específicas, mas algumas propriedades fundamentais incluem:
+
+    Vértices (Nós): Os vértices são os elementos fundamentais de um grafo e podem representar entidades, objetos ou pontos de dados.
+
+    Arestas: As arestas são conexões entre vértices e podem representar relações, ligações ou interações entre os elementos do grafo.
+
+    Grau de um Vértice: O grau de um vértice é o número de arestas que estão conectadas a ele. Em um grafo direcionado, há um grau de entrada (arestas que entram no vértice) e um grau de saída (arestas que saem do vértice).
+
+    Direção das Arestas: Em um grafo direcionado, as arestas têm uma direção específica, indo de um vértice de origem para um vértice de destino. Em um grafo não direcionado, as arestas não têm direção, e a relação é bidirecional.
+
+    Peso das Arestas: Em alguns grafos, as arestas podem ter pesos associados a elas, representando a intensidade ou custo da relação entre os vértices conectados.
+
+    Ciclos: Um ciclo é uma sequência de vértices e arestas que forma um circuito fechado. Grafos que contêm ciclos são chamados de grafos cíclicos, enquanto aqueles sem ciclos são grafos acíclicos.
+
+    Grafo Conexo: Um grafo é considerado conexo se houver um caminho entre qualquer par de vértices. Caso contrário, ele é desconexo.
+
+    Componentes Conexos: Em um grafo não conexo, os componentes conexos são subgrafos dentro do grafo principal nos quais todos os vértices estão conectados uns aos outros, mas não estão conectados a vértices fora do componente.
+
+    Grafo Bipartido: Um grafo bipartido é aquele no qual os vértices podem ser divididos em dois conjuntos disjuntos de tal forma que todas as arestas conectem vértices de conjuntos diferentes.
+
+    Grafo Completo: Um grafo completo é aquele em que cada par de vértices é conectado por uma aresta, ou seja, não há vértices isolados.
+
+    Grafo Regular: Um grafo regular é aquele em que todos os vértices têm o mesmo grau.
+
+    Grafo Ponderado: Um grafo ponderado é aquele em que as arestas têm pesos associados a elas.
+
+    Grafo Direcionado Acíclico (DAG): Um DAG é um grafo direcionado que não contém ciclos.
+
+    Ordem e Tamanho: A ordem de um grafo é o número de vértices que ele contém, enquanto o tamanho é o número de arestas.
+
+    Planaridade: Um grafo é dito planar se ele pode ser desenhado em um plano sem que as arestas se cruzem.
+
+Estas são algumas das propriedades básicas de um grafo, e existem muitas outras propriedades e conceitos relacionados, dependendo do contexto e da aplicação específica. A teoria dos grafos é um campo rico e diversificado com uma ampla variedade de tópicos e propriedades a serem explorados.
