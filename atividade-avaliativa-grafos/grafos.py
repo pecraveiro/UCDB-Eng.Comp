@@ -1,5 +1,6 @@
 import networkx as nx
 import matplotlib.pyplot as plt
+import random
 
 def criar_grafo():
     grafo = nx.Graph()
@@ -28,6 +29,11 @@ def visualizar_grafo(grafo):
     plt.title("Grafo Criado")
     plt.show()
 
+def calcular_numero_cromatico(grafo):
+    coloring = nx.coloring.greedy_color(grafo, strategy='largest_first')
+    num_colors = max(coloring.values()) + 1
+    return num_colors
+
 def propriedades_grafo(grafo):
     while True:
         print("\nOpções de Propriedades do Grafo:")
@@ -38,7 +44,8 @@ def propriedades_grafo(grafo):
         print("5. Conectividade do Grafo")
         print("6. Bipartição do Grafo")
         print("7. Árvore do Grafo")
-        print("8. Sair")
+        print("8. Número Cromático do Grafo")
+        print("9. Sair")
         
         escolha = input("Escolha uma opção: ")
 
@@ -67,6 +74,9 @@ def propriedades_grafo(grafo):
             else:
                 print("O grafo não é uma árvore.")
         elif escolha == "8":
+            num_cromatico = calcular_numero_cromatico(grafo)
+            print(f"Número Cromático do Grafo: {num_cromatico}")
+        elif escolha == "9":
             break
         else:
             print("Opção inválida. Tente novamente.")
