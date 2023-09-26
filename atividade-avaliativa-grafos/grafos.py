@@ -31,7 +31,7 @@ def abrir_arquivo_ou_criar_grafo():
         print("2. Abrir um arquivo .txt")
         print("3. Abrir um arquivo .csv")
         print("0. Sair do menu")
-        escolha = input("Escolha uma opção: ")
+        escolha = input("\nEscolha uma opção: ")
 
         if escolha == "1":
             grafo = criar_grafo()
@@ -53,7 +53,7 @@ def abrir_arquivo_ou_criar_grafo():
         elif escolha == "0":
             break
         else:
-            print("Opção inválida. Tente novamente.")
+            print("Opção inválida. Tente novamente.\n")
 
 def carregar_grafo_de_arquivo(nome_arquivo):
     grafo = nx.Graph()
@@ -91,8 +91,9 @@ def salvar_grafo_em_arquivo(grafo, nome_arquivo):
 
 def propriedades_grafo(grafo):
     while True:
-        print("\nOpções de Propriedades do Grafo:")
-        print("1. Visualizar Grafo")
+        print("\nOpções de Propriedades do Grafo:\n")
+
+
         print("2. Ordem do Grafo")
         print("3. Tamanho do Grafo")
         print("4. Grau Médio do Grafo")
@@ -101,11 +102,14 @@ def propriedades_grafo(grafo):
         print("7. Árvore do Grafo")
         print("8. Número Cromático do Grafo")
         print("9. Visualizar um novo grafo por arquivo")
+
+        print("\n1. Visualizar Grafo")
         print("10. Salvar grafo em arquivo .txt")
         print("11. Salvar grafo em arquivo .csv")
-        print("0. Sair")
         
-        escolha = input("Escolha uma opção: ")
+        print("\n0. Sair")
+        
+        escolha = input("\nEscolha uma opção: ")
 
         if escolha == "1":
             visualizar_grafo(grafo)
@@ -157,7 +161,7 @@ def salvar_grafo_em_csv(grafo, nome_arquivo):
             escritor_csv.writerow([aresta[0], aresta[1]])
 
 def main():
-    print("Criação e Propriedades de um Grafo")
+    print("\nCriação e Propriedades de um Grafo")
     while True:
         grafo = abrir_arquivo_ou_criar_grafo()
         
@@ -165,11 +169,14 @@ def main():
             # Usuário escolheu sair do menu
             break
 
-        print("\nGrafo Criado! Selecione as opções no menu:")
+        print("\nGrafo Criado!")
         for vertice, vizinhos in grafo.adjacency():
             print(f"Vértice {vertice}: Arestas para {', '.join(vizinhos)}")
-
+        
+        print("\nSelecione as opções no menu:")
         propriedades_grafo(grafo)
 
 if __name__ == "__main__":
     main()
+
+#teste pra commitar
