@@ -2,6 +2,27 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import random
 
+def abrir_arquivo_ou_criar_grafo():
+    while True:
+        print("\nOpções:")
+        print("1. Criar um novo grafo")
+        print("2. Abrir um arquivo")
+        print("3. Importar um arquivo")
+        escolha = input("Escolha uma opção: ")
+
+        if escolha == "1":
+            grafo = criar_grafo()
+            return grafo
+        elif escolha == "2":
+            nome_arquivo = input("Digite o nome do arquivo: ")
+            try:
+                grafo = carregar_grafo_de_arquivo(nome_arquivo)
+                return grafo
+            except FileNotFoundError:
+                print(f"Arquivo '{nome_arquivo}' não encontrado. Tente novamente.")
+        else:
+            print("Opção inválida. Tente novamente.")
+
 def criar_grafo():
     grafo = nx.Graph()
     while True:
@@ -21,6 +42,14 @@ def criar_grafo():
         else:
             print("Erro: Vértices não encontrados. Certifique-se de que ambos os vértices existem no grafo.")
 
+    return grafo
+
+def carregar_grafo_de_arquivo(nome_arquivo):
+    grafo = nx.Graph()
+    with open(nome_arquivo, 'r') as arquivo: #r significa 'read' - será aberto no modo de leitura
+        for linha in arquivo:
+            vertice1, vertice2 = linha.strip().split('-')
+            grafo.add_edge(vertice1, vertice2)
     return grafo
 
 def visualizar_grafo(grafo):
@@ -45,7 +74,8 @@ def propriedades_grafo(grafo):
         print("6. Bipartição do Grafo")
         print("7. Árvore do Grafo")
         print("8. Número Cromático do Grafo")
-        print("9. Sair")
+        print("9. Visualizar um novo grafo por arquivo")
+        print("0. Sair")
         
         escolha = input("Escolha uma opção: ")
 
@@ -77,15 +107,18 @@ def propriedades_grafo(grafo):
             num_cromatico = calcular_numero_cromatico(grafo)
             print(f"Número Cromático do Grafo: {num_cromatico}")
         elif escolha == "9":
+            nome_arquivo = input("Digite o nome do arquivo e a extensão: ")
+            grafo = carregar_grafo_de_arquivo(nome_arquivo)
+        elif escolha == "0":
             break
         else:
             print("Opção inválida. Tente novamente.")
 
 def main():
     print("Criação e Propriedades de um Grafo")
-    grafo = criar_grafo()
+    grafo = abrir_arquivo_ou_criar_grafo()
     
-    print("\nGrafo Criado:")
+    print("\nGrafo Criado! Selecione as opções no menu:")
     for vertice, vizinhos in grafo.adjacency():
         print(f"Vértice {vertice}: Arestas para {', '.join(vizinhos)}")
 
