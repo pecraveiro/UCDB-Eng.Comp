@@ -5,3 +5,8 @@ AndreaHarrison-Dead
 DaleHorvath-Dead
 GleenRhee-Dead
 CarlGrimes-Dead
+KilledByAZombie-ShaneWalsh
+KilledByAZombie-LoriGrimes
+KilledByAZombie-DaleHorvath
+KilledByAZombie-GleenRhee
+KilledByAZombie-CarlGrimes
