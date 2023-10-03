@@ -7,6 +7,7 @@ import webbrowser
 
 def criar_grafo():
     grafo = nx.Graph()
+
     while True:
         vertice = input("Digite um vértice (ou 'fim' para parar): ")
         if vertice.lower() == 'fim':
@@ -14,13 +15,21 @@ def criar_grafo():
         grafo.add_node(vertice)
     
     while True:
-        aresta = input("Digite no formato VérticeOrigem-VérticieDestino (Exemplo A-B) ou 'fim' para parar: ")
+        aresta = input("Digite no formato VérticeOrigem-VérticeDestino (Exemplo A-B) ou 'fim' para parar: ")
         if aresta.lower() == 'fim':
             break
+
+        if '-' not in aresta:
+            print("Formato inválido. Certifique-se de usar o formato VérticeOrigem-VérticeDestino. Por exemplo, A-B.")
+            continue
+
         vertice1, vertice2 = aresta.split('-')
-        
-        if vertice1 in grafo.nodes() and vertice2 in grafo.nodes():
+
+        if grafo.has_edge(vertice1, vertice2):
+            print(f"A aresta {aresta} já foi digitada. Ela será ignorada.")
+        elif vertice1 in grafo.nodes() and vertice2 in grafo.nodes():
             grafo.add_edge(vertice1, vertice2)
+            print(f"Aresta {aresta} adicionada com sucesso.")
         else:
             print("Erro: Vértices não encontrados. Certifique-se de que ambos os vértices existem no grafo.")
 
@@ -122,9 +131,24 @@ def calcular_numero_cromatico(grafo):
     return num_colors
 
 def salvar_grafo_em_arquivo(grafo, nome_arquivo):
+    if '.' not in nome_arquivo:
+        print("Erro: Nome do arquivo sem extensão. Por favor, inclua a extensão do arquivo (por exemplo novografo.txt).")
+        return
+
     with open(nome_arquivo, 'w') as arquivo:
         for aresta in grafo.edges():
             arquivo.write(f"{aresta[0]}-{aresta[1]}\n")
+    print(f"Grafo salvo em {nome_arquivo}.")
+
+def salvar_grafo_em_csv(grafo, nome_arquivo):
+    if '.' not in nome_arquivo:
+        print("Erro: Nome do arquivo sem extensão. Por favor, inclua a extensão do arquivo (por exemplo novografo.csv).")
+        return
+
+    with open(nome_arquivo, 'w', newline='') as arquivo:
+        escritor_csv = csv.writer(arquivo)
+        for aresta in grafo.edges():
+            escritor_csv.writerow([aresta[0], aresta[1]])
 
 def propriedades_grafo(grafo):
     while True:
@@ -201,13 +225,6 @@ def propriedades_grafo(grafo):
             grafo = carregar_grafo_de_arquivo(nome_arquivo)
         else:
             print("Opção inválida. Tente novamente.")
-
-
-def salvar_grafo_em_csv(grafo, nome_arquivo):
-    with open(nome_arquivo, 'w', newline='') as arquivo:
-        escritor_csv = csv.writer(arquivo)
-        for aresta in grafo.edges():
-            escritor_csv.writerow([aresta[0], aresta[1]])
 
 def main():
     print("\nCriação e Propriedades de um Grafo")
