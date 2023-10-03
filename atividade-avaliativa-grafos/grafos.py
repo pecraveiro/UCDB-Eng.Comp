@@ -1,7 +1,9 @@
 import networkx as nx
+from pyvis.network import Network
 import matplotlib.pyplot as plt
 import random
 import csv
+import webbrowser
 
 def criar_grafo():
     grafo = nx.Graph()
@@ -12,7 +14,7 @@ def criar_grafo():
         grafo.add_node(vertice)
     
     while True:
-        aresta = input("Digite uma aresta no formato 'vértice1-vértice2' (ou 'fim' para parar): ")
+        aresta = input("Digite no formato VérticeOrigem-VérticieDestino (Exemplo A-B) ou 'fim' para parar: ")
         if aresta.lower() == 'fim':
             break
         vertice1, vertice2 = aresta.split('-')
@@ -55,12 +57,32 @@ def abrir_arquivo_ou_criar_grafo():
         else:
             print("Opção inválida. Tente novamente.\n")
 
+#def carregar_grafo_de_arquivo(nome_arquivo):
+#    grafo = nx.Graph()
+#    with open(nome_arquivo, 'r') as arquivo:
+#        for linha in arquivo:
+#            vertice1, vertice2 = linha.strip().split('-')
+#            grafo.add_edge(vertice1, vertice2)
+#    return grafo
+
 def carregar_grafo_de_arquivo(nome_arquivo):
     grafo = nx.Graph()
-    with open(nome_arquivo, 'r') as arquivo:
-        for linha in arquivo:
-            vertice1, vertice2 = linha.strip().split('-')
-            grafo.add_edge(vertice1, vertice2)
+
+    if nome_arquivo.lower().endswith('.txt'):
+        with open(nome_arquivo, 'r') as arquivo:
+            for linha in arquivo:
+                vertice1, vertice2 = linha.strip().split('-')
+                grafo.add_edge(vertice1, vertice2)
+    elif nome_arquivo.lower().endswith('.csv'):
+        with open(nome_arquivo, 'r') as arquivo:
+            leitor_csv = csv.reader(arquivo)
+            for linha in leitor_csv:
+                if len(linha) == 2:
+                    vertice1, vertice2 = linha
+                    grafo.add_edge(vertice1, vertice2)
+    else:
+        print("Formato de arquivo não suportado. Use um arquivo .txt ou .csv.")
+
     return grafo
 
 def importar_grafo_de_csv(nome_arquivo_csv):
@@ -73,11 +95,26 @@ def importar_grafo_de_csv(nome_arquivo_csv):
                 grafo.add_edge(vertice1, vertice2)
     return grafo
 
+# def visualizar_grafo(grafo):
+#    pos = nx.spring_layout(grafo)
+#    nx.draw(grafo, pos, with_labels=True, node_size=500, node_color='lightblue', font_size=10, font_color='black')
+#    plt.title("Grafo Criado")
+#    plt.show()
+
 def visualizar_grafo(grafo):
-    pos = nx.spring_layout(grafo)
-    nx.draw(grafo, pos, with_labels=True, node_size=500, node_color='lightblue', font_size=10, font_color='black')
-    plt.title("Grafo Criado")
-    plt.show()
+    nt = Network(notebook=True)
+    
+    for node in grafo.nodes():
+        nt.add_node(node)
+    
+    for edge in grafo.edges():
+        nt.add_edge(edge[0], edge[1])
+    
+    nt.show("visualizacao_grafo_criado.html")
+
+    #abrir a visu no navegador
+    webbrowser.open("visualizacao_grafo_criado.html")
+
 
 def calcular_numero_cromatico(grafo):
     coloring = nx.coloring.greedy_color(grafo, strategy='largest_first')
@@ -93,66 +130,78 @@ def propriedades_grafo(grafo):
     while True:
         print("\nOpções de Propriedades do Grafo:\n")
 
-
-        print("2. Ordem do Grafo")
-        print("3. Tamanho do Grafo")
-        print("4. Grau Médio do Grafo")
-        print("5. Conectividade do Grafo")
-        print("6. Bipartição do Grafo")
-        print("7. Árvore do Grafo")
-        print("8. Número Cromático do Grafo")
-        print("9. Visualizar um novo grafo por arquivo")
-
-        print("\n1. Visualizar Grafo")
-        print("10. Salvar grafo em arquivo .txt")
-        print("11. Salvar grafo em arquivo .csv")
+        print("1. Ordem do Grafo")
+        print("2. Tamanho do Grafo")
+        print("3. Grau Médio do Grafo")
+        print("4. Conectividade do Grafo")
+        print("5. Bipartição do Grafo")
+        print("6. Árvore do Grafo")
+        print("7. Número Cromático do Grafo")
+        #print("8. Verificar se o Grafo é Hamiltoniano")
+        #print("9. Verificar se o Grafo é Euleriano")
+        
+        print("\n10. Visualizar Grafo")
+        print("11. Salvar grafo em arquivo .txt")
+        print("12. Salvar grafo em arquivo .csv")
+        print("13. Visualizar um novo grafo por arquivo")
         
         print("\n0. Sair")
         
         escolha = input("\nEscolha uma opção: ")
 
-        if escolha == "1":
-            visualizar_grafo(grafo)
-        elif escolha == "2":
+        if escolha == "0":
+            break
+        elif escolha == "1":
             print(f"Ordem do Grafo: {len(grafo.nodes())}")
-        elif escolha == "3":
+        elif escolha == "2":
             print(f"Tamanho do Grafo: {len(grafo.edges())}")
-        elif escolha == "4":
+        elif escolha == "3":
             grau_medio = sum(dict(grafo.degree()).values()) / len(grafo.nodes())
             print(f"Grau Médio do Grafo: {grau_medio}")
-        elif escolha == "5":
+        elif escolha == "4":
             if nx.is_connected(grafo):
                 print("O grafo é conexo.")
             else:
                 print("O grafo não é conexo.")
-        elif escolha == "6":
+        elif escolha == "5":
             if nx.is_bipartite(grafo):
                 print("O grafo é bipartido.")
             else:
                 print("O grafo não é bipartido.")
-        elif escolha == "7":
+        elif escolha == "6":
             if nx.is_tree(grafo):
                 print("O grafo é uma árvore.")
             else:
                 print("O grafo não é uma árvore.")
-        elif escolha == "8":
+        elif escolha == "7":
             num_cromatico = calcular_numero_cromatico(grafo)
             print(f"Número Cromático do Grafo: {num_cromatico}")
-        elif escolha == "9":
-            nome_arquivo = input("Digite o nome do arquivo e a extensão: ")
-            grafo = carregar_grafo_de_arquivo(nome_arquivo)
+        #elif escolha == "8":
+        #    if nx.is_hamiltonian(grafo):
+        #        print("O grafo é Hamiltoniano.")
+        #    else:
+        #        print("O grafo não é Hamiltoniano.")
+        #elif escolha == "9":
+        #    if nx.is_eulerian(grafo):
+        #        print("O grafo é Euleriano.")
+        #    else:
+        #      print("O grafo não é Euleriano.")
         elif escolha == "10":
+            visualizar_grafo(grafo)
+        elif escolha == "11":
             nome_arquivo = input("Digite o nome do arquivo .txt para salvar o grafo: ")
             salvar_grafo_em_arquivo(grafo, nome_arquivo)
             print(f"Grafo salvo em {nome_arquivo}.")
-        elif escolha == "11":
+        elif escolha == "12":
             nome_arquivo = input("Digite o nome do arquivo .csv para salvar o grafo: ")
             salvar_grafo_em_csv(grafo, nome_arquivo)
             print(f"Grafo salvo em {nome_arquivo}.")
-        elif escolha == "0":
-            break
+        elif escolha == "13":
+            nome_arquivo = input("Digite o nome do arquivo e a extensão: ")
+            grafo = carregar_grafo_de_arquivo(nome_arquivo)
         else:
             print("Opção inválida. Tente novamente.")
+
 
 def salvar_grafo_em_csv(grafo, nome_arquivo):
     with open(nome_arquivo, 'w', newline='') as arquivo:
@@ -178,5 +227,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-#teste pra commitar
