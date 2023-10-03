@@ -12,6 +12,9 @@ def criar_grafo():
         vertice = input("Digite um vértice (ou 'fim' para parar): ")
         if vertice.lower() == 'fim':
             break
+        elif not vertice:
+            print("\nErro: Digite pelo menos 1 caractere para criar um vértice.\n")
+            continue
         grafo.add_node(vertice)
     
     while True:
@@ -20,20 +23,21 @@ def criar_grafo():
             break
 
         if '-' not in aresta:
-            print("Formato inválido. Certifique-se de usar o formato VérticeOrigem-VérticeDestino. Por exemplo, A-B.")
+            print("\nFormato inválido. Certifique-se de usar o formato VérticeOrigem-VérticeDestino. Por exemplo, A-B.\n")
             continue
 
         vertice1, vertice2 = aresta.split('-')
 
         if grafo.has_edge(vertice1, vertice2):
-            print(f"A aresta {aresta} já foi digitada. Ela será ignorada.")
+            print(f"\nA aresta {aresta} já foi digitada. Ela será ignorada.\n")
         elif vertice1 in grafo.nodes() and vertice2 in grafo.nodes():
             grafo.add_edge(vertice1, vertice2)
-            print(f"Aresta {aresta} adicionada com sucesso.")
+            print(f"\nAresta {aresta} adicionada com sucesso.\n")
         else:
-            print("Erro: Vértices não encontrados. Certifique-se de que ambos os vértices existem no grafo.")
+            print("\nErro: Vértices não encontrados. Certifique-se de que ambos os vértices existem no grafo.\n")
 
     return grafo
+
 
 def abrir_arquivo_ou_criar_grafo():
     while True:
@@ -90,7 +94,7 @@ def carregar_grafo_de_arquivo(nome_arquivo):
                     vertice1, vertice2 = linha
                     grafo.add_edge(vertice1, vertice2)
     else:
-        print("Formato de arquivo não suportado. Use um arquivo .txt ou .csv.")
+        print("\nFormato de arquivo não suportado. Use um arquivo .txt ou .csv.")
 
     return grafo
 
@@ -132,23 +136,25 @@ def calcular_numero_cromatico(grafo):
 
 def salvar_grafo_em_arquivo(grafo, nome_arquivo):
     if '.' not in nome_arquivo:
-        print("Erro: Nome do arquivo sem extensão. Por favor, inclua a extensão do arquivo (por exemplo novografo.txt).")
+        print("\nErro: Nome do arquivo sem extensão. Por favor, inclua a extensão do arquivo (por exemplo novografo.txt).")
         return
 
     with open(nome_arquivo, 'w') as arquivo:
         for aresta in grafo.edges():
             arquivo.write(f"{aresta[0]}-{aresta[1]}\n")
-    print(f"Grafo salvo em {nome_arquivo}.")
+            print(f"Grafo salvo em {nome_arquivo}.")
 
 def salvar_grafo_em_csv(grafo, nome_arquivo):
     if '.' not in nome_arquivo:
-        print("Erro: Nome do arquivo sem extensão. Por favor, inclua a extensão do arquivo (por exemplo novografo.csv).")
+        print("\nErro: Nome do arquivo sem extensão. Por favor, inclua a extensão do arquivo (por exemplo novografo.csv).")
         return
 
     with open(nome_arquivo, 'w', newline='') as arquivo:
         escritor_csv = csv.writer(arquivo)
         for aresta in grafo.edges():
             escritor_csv.writerow([aresta[0], aresta[1]])
+
+    print(f"Grafo salvo em {nome_arquivo}.") #bugfix
 
 def propriedades_grafo(grafo):
     while True:
@@ -161,8 +167,6 @@ def propriedades_grafo(grafo):
         print("5. Bipartição do Grafo")
         print("6. Árvore do Grafo")
         print("7. Número Cromático do Grafo")
-        #print("8. Verificar se o Grafo é Hamiltoniano")
-        #print("9. Verificar se o Grafo é Euleriano")
         
         print("\n10. Visualizar Grafo")
         print("11. Salvar grafo em arquivo .txt")
@@ -200,31 +204,21 @@ def propriedades_grafo(grafo):
         elif escolha == "7":
             num_cromatico = calcular_numero_cromatico(grafo)
             print(f"Número Cromático do Grafo: {num_cromatico}")
-        #elif escolha == "8":
-        #    if nx.is_hamiltonian(grafo):
-        #        print("O grafo é Hamiltoniano.")
-        #    else:
-        #        print("O grafo não é Hamiltoniano.")
-        #elif escolha == "9":
-        #    if nx.is_eulerian(grafo):
-        #        print("O grafo é Euleriano.")
-        #    else:
-        #      print("O grafo não é Euleriano.")
         elif escolha == "10":
             visualizar_grafo(grafo)
         elif escolha == "11":
             nome_arquivo = input("Digite o nome do arquivo .txt para salvar o grafo: ")
             salvar_grafo_em_arquivo(grafo, nome_arquivo)
-            print(f"Grafo salvo em {nome_arquivo}.")
+            print(f"\nGrafo salvo em {nome_arquivo}.")
         elif escolha == "12":
             nome_arquivo = input("Digite o nome do arquivo .csv para salvar o grafo: ")
             salvar_grafo_em_csv(grafo, nome_arquivo)
-            print(f"Grafo salvo em {nome_arquivo}.")
+            print(f"\nGrafo salvo em {nome_arquivo}.")
         elif escolha == "13":
             nome_arquivo = input("Digite o nome do arquivo e a extensão: ")
             grafo = carregar_grafo_de_arquivo(nome_arquivo)
         else:
-            print("Opção inválida. Tente novamente.")
+            print("\nOpção inválida. Tente novamente.")
 
 def main():
     print("\nCriação e Propriedades de um Grafo")

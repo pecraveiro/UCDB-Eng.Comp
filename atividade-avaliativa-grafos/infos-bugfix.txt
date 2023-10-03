@@ -17,3 +17,9 @@ ValueError: not enough values to unpack (expected 2, got 1)
 
 
 - Possibilidade de criar mais vértices, inputs dos grafos além de 2 vértices
+
+- Menu clear, para facilitar a visualização
+
+- Grafo salvo mesmo sem a extensao estar correta "a" grafo salvo em a
+
+- Fazer um readme
