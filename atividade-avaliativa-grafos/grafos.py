@@ -139,22 +139,27 @@ def salvar_grafo_em_arquivo(grafo, nome_arquivo):
         print("\nErro: Nome do arquivo sem extensão. Por favor, inclua a extensão do arquivo (por exemplo novografo.txt).")
         return
 
-    with open(nome_arquivo, 'w') as arquivo:
-        for aresta in grafo.edges():
-            arquivo.write(f"{aresta[0]}-{aresta[1]}\n")
-            print(f"Grafo salvo em {nome_arquivo}.")
+    try:
+        with open(nome_arquivo, 'w') as arquivo:
+            for aresta in grafo.edges():
+                arquivo.write(f"{aresta[0]}-{aresta[1]}\n")
+        print(f"Grafo salvo em {nome_arquivo}.")
+    except Exception as e:
+        print(f"\nErro ao salvar o grafo: {str(e)}")
 
 def salvar_grafo_em_csv(grafo, nome_arquivo):
     if '.' not in nome_arquivo:
         print("\nErro: Nome do arquivo sem extensão. Por favor, inclua a extensão do arquivo (por exemplo novografo.csv).")
         return
 
-    with open(nome_arquivo, 'w', newline='') as arquivo:
-        escritor_csv = csv.writer(arquivo)
-        for aresta in grafo.edges():
-            escritor_csv.writerow([aresta[0], aresta[1]])
-
-    print(f"Grafo salvo em {nome_arquivo}.") #bugfix
+    try:
+        with open(nome_arquivo, 'w', newline='') as arquivo:
+            escritor_csv = csv.writer(arquivo)
+            for aresta in grafo.edges():
+                escritor_csv.writerow([aresta[0], aresta[1]])
+        print(f"O grafo foi salvo com sucesso no arquivo {nome_arquivo}.")
+    except Exception as e:
+        print(f"\nErro ao salvar o grafo: {str(e)}")
 
 def propriedades_grafo(grafo):
     while True:
@@ -209,11 +214,9 @@ def propriedades_grafo(grafo):
         elif escolha == "11":
             nome_arquivo = input("Digite o nome do arquivo .txt para salvar o grafo: ")
             salvar_grafo_em_arquivo(grafo, nome_arquivo)
-            print(f"\nGrafo salvo em {nome_arquivo}.")
         elif escolha == "12":
             nome_arquivo = input("Digite o nome do arquivo .csv para salvar o grafo: ")
             salvar_grafo_em_csv(grafo, nome_arquivo)
-            print(f"\nGrafo salvo em {nome_arquivo}.")
         elif escolha == "13":
             nome_arquivo = input("Digite o nome do arquivo e a extensão: ")
             grafo = carregar_grafo_de_arquivo(nome_arquivo)

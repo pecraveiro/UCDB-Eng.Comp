@@ -1,25 +1,7 @@
-- Opção 13 não abre um arquivo csv
-- Não pode salvar o grafo se ele n colocou a extensão
-
-- Digite no formato VérticeOrigem-VérticieDestino (Exemplo A-B) ou 'fim' para parar: a
-Traceback (most recent call last):
-  File "grafos.py", line 207, in <module>
-    main()
-  File "grafos.py", line 193, in main
-    grafo = abrir_arquivo_ou_criar_grafo()
-  File "grafos.py", line 37, in abrir_arquivo_ou_criar_grafo
-    grafo = criar_grafo()
-  File "grafos.py", line 18, in criar_grafo
-    vertice1, vertice2 = aresta.split('-')
-ValueError: not enough values to unpack (expected 2, got 1)
-
-- Não pode digitar de qualquer forma
-
-
 - Possibilidade de criar mais vértices, inputs dos grafos além de 2 vértices
 
 - Menu clear, para facilitar a visualização
 
-- Grafo salvo mesmo sem a extensao estar correta "a" grafo salvo em a
-
 - Fazer um readme
+
+- Quando o usuário errar na hora de criar o grafo, seria uma boa ele poder retirar o vértice ou poder retirar uma aresta
