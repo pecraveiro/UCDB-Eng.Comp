@@ -16,7 +16,7 @@ def criar_grafo():
             print("\nErro: Digite pelo menos 1 caractere para criar um vértice.\n")
             continue
         grafo.add_node(vertice)
-    
+
     while True:
         aresta = input("Digite no formato VérticeOrigem-VérticeDestino (Exemplo A-B) ou 'fim' para parar: ")
         if aresta.lower() == 'fim':
@@ -36,8 +36,64 @@ def criar_grafo():
         else:
             print("\nErro: Vértices não encontrados. Certifique-se de que ambos os vértices existem no grafo.\n")
 
+    adicionar_remover_vertices_arestas(grafo)  # Chamada da nova função
+
     return grafo
 
+def adicionar_remover_vertices_arestas(grafo):
+    while True:
+        print("\nOpções:") #caso o usuário queira modificar algo que acabou de criar
+        print("1. Adicionar novo vértice")
+        print("2. Remover vértice")
+        print("3. Adicionar nova aresta")
+        print("4. Remover aresta")
+        print("0. Continuar")
+
+        escolha = input("\nEscolha uma opção: ")
+
+        if escolha == "0":
+            break
+        elif escolha == "1":
+            vertice = input("Digite um vértice para adicionar: ")
+            grafo.add_node(vertice)
+            print(f"\nVértice {vertice} adicionado com sucesso.\n")
+        elif escolha == "2":
+            vertice = input("Digite um vértice para remover: ")
+            if vertice in grafo.nodes():
+                grafo.remove_node(vertice)
+                print(f"\nVértice {vertice} removido com sucesso.\n")
+            else:
+                print(f"\nVértice {vertice} não encontrado. Não foi removido.\n")
+        elif escolha == "3":
+            aresta = input("Digite uma aresta no formato VérticeOrigem-VérticeDestino para adicionar: ")
+            if '-' not in aresta:
+                print("\nFormato inválido. Certifique-se de usar o formato VérticeOrigem-VérticeDestino. Por exemplo, A-B.\n")
+                continue
+
+            vertice1, vertice2 = aresta.split('-')
+
+            if grafo.has_edge(vertice1, vertice2):
+                print(f"\nA aresta {aresta} já existe. Ela será ignorada.\n")
+            elif vertice1 in grafo.nodes() and vertice2 in grafo.nodes():
+                grafo.add_edge(vertice1, vertice2)
+                print(f"\nAresta {aresta} adicionada com sucesso.\n")
+            else:
+                print("\nErro: Vértices não encontrados. Certifique-se de que ambos os vértices existem no grafo.\n")
+        elif escolha == "4":
+            aresta = input("Digite uma aresta no formato VérticeOrigem-VérticeDestino para remover: ")
+            if '-' not in aresta:
+                print("\nFormato inválido. Certifique-se de usar o formato VérticeOrigem-VérticeDestino. Por exemplo, A-B.\n")
+                continue
+
+            vertice1, vertice2 = aresta.split('-')
+
+            if grafo.has_edge(vertice1, vertice2):
+                grafo.remove_edge(vertice1, vertice2)
+                print(f"\nAresta {aresta} removida com sucesso.\n")
+            else:
+                print(f"\nAresta {aresta} não encontrada. Não foi removida.\n")
+        else:
+            print("Opção inválida. Tente novamente.")
 
 def abrir_arquivo_ou_criar_grafo():
     while True:
@@ -125,7 +181,7 @@ def visualizar_grafo(grafo):
     
     nt.show("visualizacao_grafo_criado.html")
 
-    #abrir a visu no navegador
+    #abrir a visualização no navegador
     webbrowser.open("visualizacao_grafo_criado.html")
 
 
@@ -161,6 +217,18 @@ def salvar_grafo_em_csv(grafo, nome_arquivo):
     except Exception as e:
         print(f"\nErro ao salvar o grafo: {str(e)}")
 
+def calcular_grau_maximo_minimo(grafo):
+    graus = dict(grafo.degree())
+    grau_maximo = max(graus.values())
+    grau_minimo = min(graus.values())
+    return grau_maximo, grau_minimo
+
+def calcular_raio_diametro_perimetro(grafo):
+    raio = nx.radius(grafo)
+    diametro = nx.diameter(grafo)
+    perimetro = len(nx.periphery(grafo))
+    return raio, diametro, perimetro
+
 def propriedades_grafo(grafo):
     while True:
         print("\nOpções de Propriedades do Grafo:\n")
@@ -172,6 +240,8 @@ def propriedades_grafo(grafo):
         print("5. Bipartição do Grafo")
         print("6. Árvore do Grafo")
         print("7. Número Cromático do Grafo")
+        print("8. Grau Máximo e Mínimo do Grafo")
+        print("9. Raio, Diâmetro e Perímetro do Grafo")
         
         print("\n10. Visualizar Grafo")
         print("11. Salvar grafo em arquivo .txt")
@@ -209,6 +279,15 @@ def propriedades_grafo(grafo):
         elif escolha == "7":
             num_cromatico = calcular_numero_cromatico(grafo)
             print(f"Número Cromático do Grafo: {num_cromatico}")
+        elif escolha == "8":
+            grau_maximo, grau_minimo = calcular_grau_maximo_minimo(grafo)
+            print(f"Grau Máximo do Grafo: {grau_maximo}")
+            print(f"Grau Mínimo do Grafo: {grau_minimo}")
+        elif escolha == "9":
+            raio, diametro, perimetro = calcular_raio_diametro_perimetro(grafo)
+            print(f"Raio do Grafo: {raio}")
+            print(f"Diâmetro do Grafo: {diametro}")
+            print(f"Perímetro do Grafo: {perimetro}")
         elif escolha == "10":
             visualizar_grafo(grafo)
         elif escolha == "11":
