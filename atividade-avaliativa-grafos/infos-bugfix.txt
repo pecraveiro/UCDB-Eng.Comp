@@ -11,3 +11,5 @@
 - Grafos sem pesos não estão abrindo
 
 - opcao 13: se eu digito um arquivo que nao existe, o código para, colocar uma opcao de erro
+
+- iniciou o programa, abrir o arquivo .txt e digitar qualquer coisa, ele ta abrindo mesmo dando errado

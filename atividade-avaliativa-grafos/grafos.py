@@ -184,19 +184,26 @@ def importar_grafo_de_csv(nome_arquivo_csv):
 def visualizar_grafo(grafo):
     nt = Network(notebook=True)
     
+    # Layout personalizado (spring layout neste exemplo)
+    pos = nx.spring_layout(grafo)
     for node in grafo.nodes():
-        nt.add_node(node)
-    
+        nt.add_node(node, x=pos[node][0] * 100, y=pos[node][1] * 100, color='brown')
+
+    # Adicionando um fundo branco
+    nt.bgcolor = "white"
+
+    # Personalizando as arestas
     for edge in grafo.edges(data=True):
         vertice1, vertice2, dados_aresta = edge
-        peso = dados_aresta.get('weight', 1)  # Se não houver peso, assume 1
-        nt.add_edge(vertice1, vertice2, label=f"Peso: {peso}")
-    
+        peso = dados_aresta.get('weight', 1)
+        color = "green" if peso > 1 else "black"  # Arestas vermelhas para pesos maiores que 1
+        nt.add_edge(vertice1, vertice2, label=f"Peso: {peso}", color=color)
+
+    # Exibindo a visualização
     nt.show("visualizacao_grafo_criado.html")
 
-    # Abrir a visualização no navegador
+    # Abrindo a visualização no navegador
     webbrowser.open("visualizacao_grafo_criado.html")
-
 
 def calcular_numero_cromatico(grafo):
     coloring = nx.coloring.greedy_color(grafo, strategy='largest_first')
