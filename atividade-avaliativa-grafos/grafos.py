@@ -18,20 +18,20 @@ def criar_grafo():
         grafo.add_node(vertice)
 
     while True:
-        aresta = input("Digite no formato VérticeOrigem-VérticeDestino (Exemplo A-B) ou 'fim' para parar: ")
+        aresta = input("Digite no formato VérticeOrigem-VérticeDestino-Peso (Exemplo A-B-3) ou 'fim' para parar: ")
         if aresta.lower() == 'fim':
             break
 
         if '-' not in aresta:
-            print("\nFormato inválido. Certifique-se de usar o formato VérticeOrigem-VérticeDestino. Por exemplo, A-B.\n")
+            print("\nFormato inválido. Certifique-se de usar o formato VérticeOrigem-VérticeDestino-Peso. Por exemplo, A-B-3.\n")
             continue
 
-        vertice1, vertice2 = aresta.split('-')
+        vertice1, vertice2, peso = aresta.split('-')
 
         if grafo.has_edge(vertice1, vertice2):
             print(f"\nA aresta {aresta} já foi digitada. Ela será ignorada.\n")
         elif vertice1 in grafo.nodes() and vertice2 in grafo.nodes():
-            grafo.add_edge(vertice1, vertice2)
+            grafo.add_edge(vertice1, vertice2, weight=int(peso))
             print(f"\nAresta {aresta} adicionada com sucesso.\n")
         else:
             print("\nErro: Vértices não encontrados. Certifique-se de que ambos os vértices existem no grafo.\n")
@@ -42,7 +42,7 @@ def criar_grafo():
 
 def adicionar_remover_vertices_arestas(grafo):
     while True:
-        print("\nOpções:") #caso o usuário queira modificar algo que acabou de criar
+        print("\nOpções:")
         print("1. Adicionar novo vértice")
         print("2. Remover vértice")
         print("3. Adicionar nova aresta")
@@ -65,17 +65,17 @@ def adicionar_remover_vertices_arestas(grafo):
             else:
                 print(f"\nVértice {vertice} não encontrado. Não foi removido.\n")
         elif escolha == "3":
-            aresta = input("Digite uma aresta no formato VérticeOrigem-VérticeDestino para adicionar: ")
+            aresta = input("Digite uma aresta no formato VérticeOrigem-VérticeDestino-Peso para adicionar: ")
             if '-' not in aresta:
-                print("\nFormato inválido. Certifique-se de usar o formato VérticeOrigem-VérticeDestino. Por exemplo, A-B.\n")
+                print("\nFormato inválido. Certifique-se de usar o formato VérticeOrigem-VérticeDestino-Peso. Por exemplo, A-B-3.\n")
                 continue
 
-            vertice1, vertice2 = aresta.split('-')
+            vertice1, vertice2, peso = aresta.split('-')
 
             if grafo.has_edge(vertice1, vertice2):
                 print(f"\nA aresta {aresta} já existe. Ela será ignorada.\n")
             elif vertice1 in grafo.nodes() and vertice2 in grafo.nodes():
-                grafo.add_edge(vertice1, vertice2)
+                grafo.add_edge(vertice1, vertice2, weight=int(peso))
                 print(f"\nAresta {aresta} adicionada com sucesso.\n")
             else:
                 print("\nErro: Vértices não encontrados. Certifique-se de que ambos os vértices existem no grafo.\n")
@@ -88,12 +88,17 @@ def adicionar_remover_vertices_arestas(grafo):
             vertice1, vertice2 = aresta.split('-')
 
             if grafo.has_edge(vertice1, vertice2):
+                peso = grafo[vertice1][vertice2].get('weight')  # Verifica se a aresta tem peso
                 grafo.remove_edge(vertice1, vertice2)
-                print(f"\nAresta {aresta} removida com sucesso.\n")
+                if peso is not None:
+                    print(f"\nAresta {aresta} removida com sucesso. Peso: {peso}\n")
+                else:
+                    print(f"\nAresta {aresta} removida com sucesso.\n")
             else:
                 print(f"\nAresta {aresta} não encontrada. Não foi removida.\n")
         else:
             print("Opção inválida. Tente novamente.")
+
 
 def abrir_arquivo_ou_criar_grafo():
     while True:
@@ -140,19 +145,20 @@ def carregar_grafo_de_arquivo(nome_arquivo):
     if nome_arquivo.lower().endswith('.txt'):
         with open(nome_arquivo, 'r') as arquivo:
             for linha in arquivo:
-                vertice1, vertice2 = linha.strip().split('-')
-                grafo.add_edge(vertice1, vertice2)
+                vertice1, vertice2, peso = linha.strip().split('-')
+                grafo.add_edge(vertice1, vertice2, weight=int(peso))
     elif nome_arquivo.lower().endswith('.csv'):
         with open(nome_arquivo, 'r') as arquivo:
             leitor_csv = csv.reader(arquivo)
             for linha in leitor_csv:
-                if len(linha) == 2:
-                    vertice1, vertice2 = linha
-                    grafo.add_edge(vertice1, vertice2)
+                if len(linha) == 3:
+                    vertice1, vertice2, peso = linha
+                    grafo.add_edge(vertice1, vertice2, weight=int(peso))
     else:
         print("\nFormato de arquivo não suportado. Use um arquivo .txt ou .csv.")
 
     return grafo
+
 
 def importar_grafo_de_csv(nome_arquivo_csv):
     grafo = nx.Graph()
@@ -161,8 +167,13 @@ def importar_grafo_de_csv(nome_arquivo_csv):
         for linha in leitor_csv:
             if len(linha) == 2:
                 vertice1, vertice2 = linha
-                grafo.add_edge(vertice1, vertice2)
+                peso = 1  # Peso padrão se não houver informação de peso
+                grafo.add_edge(vertice1, vertice2, weight=int(peso))
+            elif len(linha) == 3:
+                vertice1, vertice2, peso = linha
+                grafo.add_edge(vertice1, vertice2, weight=int(peso))
     return grafo
+
 
 # def visualizar_grafo(grafo):
 #    pos = nx.spring_layout(grafo)
@@ -176,12 +187,14 @@ def visualizar_grafo(grafo):
     for node in grafo.nodes():
         nt.add_node(node)
     
-    for edge in grafo.edges():
-        nt.add_edge(edge[0], edge[1])
+    for edge in grafo.edges(data=True):
+        vertice1, vertice2, dados_aresta = edge
+        peso = dados_aresta.get('weight', 1)  # Se não houver peso, assume 1
+        nt.add_edge(vertice1, vertice2, label=f"Peso: {peso}")
     
     nt.show("visualizacao_grafo_criado.html")
 
-    #abrir a visualização no navegador
+    # Abrir a visualização no navegador
     webbrowser.open("visualizacao_grafo_criado.html")
 
 
@@ -190,6 +203,24 @@ def calcular_numero_cromatico(grafo):
     num_colors = max(coloring.values()) + 1
     return num_colors
 
+def calcular_arvore_minima_geradora(grafo):
+    print("\nEscolha o algoritmo:")
+    print("1. Kruskal")
+    print("2. Prim")
+
+    escolha = input("Escolha uma opção: ")
+
+    if escolha == "1":
+        arvore_minima = nx.minimum_spanning_tree(grafo, algorithm='kruskal')
+    elif escolha == "2":
+        arvore_minima = nx.minimum_spanning_tree(grafo, algorithm='prim')
+    else:
+        print("Opção inválida.")
+        return
+
+    visualizar_grafo(arvore_minima)
+    print("Árvore Mínima Geradora Calculada.")
+
 def salvar_grafo_em_arquivo(grafo, nome_arquivo):
     if '.' not in nome_arquivo:
         print("\nErro: Nome do arquivo sem extensão. Por favor, inclua a extensão do arquivo (por exemplo novografo.txt).")
@@ -197,25 +228,29 @@ def salvar_grafo_em_arquivo(grafo, nome_arquivo):
 
     try:
         with open(nome_arquivo, 'w') as arquivo:
-            for aresta in grafo.edges():
-                arquivo.write(f"{aresta[0]}-{aresta[1]}\n")
+            for aresta in grafo.edges(data=True):
+                vertice1, vertice2, peso = aresta[0], aresta[1], aresta[2].get('weight', 1)  # Se não houver peso, assume 1
+                arquivo.write(f"{vertice1}-{vertice2}-{peso}\n")
         print(f"Grafo salvo em {nome_arquivo}.")
     except Exception as e:
         print(f"\nErro ao salvar o grafo: {str(e)}")
 
+
 def salvar_grafo_em_csv(grafo, nome_arquivo):
     if '.' not in nome_arquivo:
-        print("\nErro: Nome do arquivo sem extensão. Por favor, inclua a extensão do arquivo (por exemplo novografo.csv).")
+        print("\nErro: Nome do arquivo sem extensão. Por favor, inclua a extensão do arquivo (por exemplo, novografo.csv).")
         return
 
     try:
         with open(nome_arquivo, 'w', newline='') as arquivo:
             escritor_csv = csv.writer(arquivo)
-            for aresta in grafo.edges():
-                escritor_csv.writerow([aresta[0], aresta[1]])
+            for aresta in grafo.edges(data=True):
+                vertice1, vertice2, peso = aresta[0], aresta[1], aresta[2].get('weight', 1)
+                escritor_csv.writerow([vertice1, vertice2, peso])
         print(f"O grafo foi salvo com sucesso no arquivo {nome_arquivo}.")
     except Exception as e:
         print(f"\nErro ao salvar o grafo: {str(e)}")
+
 
 def calcular_grau_maximo_minimo(grafo):
     graus = dict(grafo.degree())
@@ -223,11 +258,29 @@ def calcular_grau_maximo_minimo(grafo):
     grau_minimo = min(graus.values())
     return grau_maximo, grau_minimo
 
-def calcular_raio_diametro_perimetro(grafo):
-    raio = nx.radius(grafo)
-    diametro = nx.diameter(grafo)
-    perimetro = len(nx.periphery(grafo))
-    return raio, diametro, perimetro
+def calcular_raio(grafo):
+    try:
+        raio = nx.radius(grafo)
+        return raio
+    except nx.exception.NetworkXError:
+        print("O grafo não é conexo.")
+        return None
+
+def calcular_diametro(grafo):
+    try:
+        diametro = nx.diameter(grafo)
+        return diametro
+    except nx.exception.NetworkXError:
+        print("O grafo não é conexo.")
+        return None
+
+def calcular_perimetro(grafo):
+    try:
+        perimetro = len(nx.periphery(grafo))
+        return perimetro
+    except nx.exception.NetworkXError:
+        print("O grafo não é conexo.")
+        return None
 
 def propriedades_grafo(grafo):
     while True:
@@ -242,6 +295,7 @@ def propriedades_grafo(grafo):
         print("7. Número Cromático do Grafo")
         print("8. Grau Máximo e Mínimo do Grafo")
         print("9. Raio, Diâmetro e Perímetro do Grafo")
+        print("14. Calcular Árvore Mínima Geradora")
         
         print("\n10. Visualizar Grafo")
         print("11. Salvar grafo em arquivo .txt")
@@ -283,11 +337,18 @@ def propriedades_grafo(grafo):
             grau_maximo, grau_minimo = calcular_grau_maximo_minimo(grafo)
             print(f"Grau Máximo do Grafo: {grau_maximo}")
             print(f"Grau Mínimo do Grafo: {grau_minimo}")
+        elif escolha == "14":
+            calcular_arvore_minima_geradora(grafo)
         elif escolha == "9":
-            raio, diametro, perimetro = calcular_raio_diametro_perimetro(grafo)
-            print(f"Raio do Grafo: {raio}")
-            print(f"Diâmetro do Grafo: {diametro}")
-            print(f"Perímetro do Grafo: {perimetro}")
+            raio = calcular_raio(grafo)
+            diametro = calcular_diametro(grafo)
+            perimetro = calcular_perimetro(grafo)
+
+            if raio is not None:
+                print(f"Raio do Grafo: {raio}")
+                print(f"Diâmetro do Grafo: {diametro}")
+                print(f"Perímetro do Grafo: {perimetro}")
+
         elif escolha == "10":
             visualizar_grafo(grafo)
         elif escolha == "11":
@@ -312,9 +373,18 @@ def main():
             break
 
         print("\nGrafo Criado!")
+
         for vertice, vizinhos in grafo.adjacency():
-            print(f"Vértice {vertice}: Arestas para {', '.join(vizinhos)}")
-        
+            if not vizinhos:
+                print(f"Vértice {vertice}: Sem arestas.")
+            else:
+                arestas_info = []
+                for vizinho, dados_aresta in vizinhos.items():
+                    peso = dados_aresta.get('weight', 1)
+                    arestas_info.append(f"{vizinho} (Peso: {peso})")
+                arestas_str = ', '.join(arestas_info)
+                print(f"Vértice {vertice}: Arestas para {arestas_str}")
+
         print("\nSelecione as opções no menu:")
         propriedades_grafo(grafo)
 

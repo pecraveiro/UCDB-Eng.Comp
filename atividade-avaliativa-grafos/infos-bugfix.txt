@@ -4,4 +4,10 @@
 
 - Fazer um readme
 
-- Quando o usuário errar na hora de criar o grafo, seria uma boa ele poder retirar o vértice ou poder retirar uma aresta
+- grau max min e médio em uma só função
+
+- provavelmente vou ter que atualizar a função de pesos para quando nao tiver nada ser 1
+
+- Grafos sem pesos não estão abrindo
+
+- opcao 13: se eu digito um arquivo que nao existe, o código para, colocar uma opcao de erro
