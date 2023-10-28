@@ -1,32 +1,17 @@
-# Atividade Avaliativa Assíncrona Matemática Discreta
-# Universidade Católica Dom Bosco
-## Aluno: Pedro M. S. Craveiro
-## Grafos
+# Disciplina Matemática Discreta
 
-[!IMPORTANT]
-Para rodar o arquivo, precisa instalar as seguintes dependências: X, Y, Z
+Repositório para a Matéria de Matemática Discreta - 4° Semestre de Eng. Comp. ministrada pelo professor Hemerson Pistori
+Aluno: Pedro M. S. Craveiro
+RA: 193934
 
-- [X] 10 Propriedades de Grafos
-- [X] Criação do seu próprio grafo
-- [X] Visualização dos Grafos
-- [X] Importar Grafos
-- [X] Salvar Grafo Criado
+## Atividade Avaliativa Grafos
 
-## 10 Propriedades de Grafos
-- Ordem do Grafo
-- Tamanho do Grafo
-- Conectividade do Grafo
-- Grau Médio do Grafo
-- Conectividade do Grafo
-- BIpartição do Grafo
-- Árvore do Grafo
-- Número Cromático do Grafo
+[Atividade Avaliativa Grafos - Repositório Github](https://github.com)
 
-## Visualização do Grafo
-- Visualização é feita por meio da bilbioteca Pyvis
-- O usuário pode visualizar tanto o grafo criado durante a utilização do programa quanto importar um arquivo colocando-o no diretório.
+## Atividade Avalitiva Google Maps
 
-## Salvar Grafo
-- O usuário pode salvar o grafo em arquivo .txt ou .csv
+[Atividade Avaliativa Google Maps - Repositório Github](https://github.com)
 
-- https://docs.github.com/pt/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax
+## Atividade Desafio TelegramBOT
+
+[Atividade Desafio Telegram Bot - Repositório Github](https://github.com)
