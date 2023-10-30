@@ -1,5 +1,0 @@
-Possíveis modificações:
-- Colocar mais pontos no mapa
-- Ao invés de eu dar o melhor caminho, agora o programa fazer o melhor caminho possível, com base nos meus pontos, eu defino o menor peso para eles e vou definir para os outros caminhos um peso maior
-- Para cada caminho, ter uma cor diferente na trajetória
-- 
