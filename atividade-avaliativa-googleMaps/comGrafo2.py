@@ -53,6 +53,14 @@ def calcular_rota():
             ('ZIG', 'G', 1),
             ('G', 'H', 1),
             ('H', 'I', 1),
+            
+            ('A', 'J', 4),
+            ('J', 'K', 3),
+            ('K', 'L', 2),
+            ('L', 'M', 2),
+            ('M', 'R', 3),
+            ('R', 'S', 3),
+            ('S', 'I', 2)
         ]
     elif modo == 'a_pe':
         arestas = [
@@ -63,6 +71,17 @@ def calcular_rota():
             ('M', 'R', 1),
             ('R', 'S', 1),
             ('S', 'I', 1),
+
+            ('A', 'B', 3),
+            ('B', 'C', 2),
+            ('C', 'D', 4),
+            ('D', 'E', 4),
+            ('E', 'F', 2),
+            ('F', 'F2', 3),
+            ('F2', 'ZIG', 2),
+            ('ZIG', 'G', 3),
+            ('G', 'H', 5),
+            ('H', 'I', 4)
         ]
     
     G.add_weighted_edges_from(arestas)
@@ -92,7 +111,7 @@ def calcular_rota():
     m.save(map_file)
 
     # Abrir o arquivo HTML no Google Chrome
-    chrome_path = "C:/Program Files/Google/Chrome/Application/chrome.exe"  # Altere o caminho do Chrome conforme necessário
+    chrome_path = "C:/Program Files/Google/Chrome/Application/chrome.exe"
     webbrowser.register('chrome', None, webbrowser.BackgroundBrowser(chrome_path))
     webbrowser.get('chrome').open('file://' + map_file, new=2)
 
@@ -274,7 +293,7 @@ mostrar_grafo_carro_button = tk.Button(root, text="Exibir Grafo Rota-Carro", com
 mostrar_grafo_carro_button.pack()
 
 # Botão para exibir o grafo
-mostrar_grafo_a_pe_button = tk.Button(root, text="Exibir Grafo Rota-Carro", command=mostrar_grafo_a_pe)
+mostrar_grafo_a_pe_button = tk.Button(root, text="Exibir Grafo Rota-Andando", command=mostrar_grafo_a_pe)
 mostrar_grafo_a_pe_button.pack()
 
 # Inicie a interface gráfica

@@ -96,6 +96,7 @@ def calcular_rota(modo):
         folium.Marker([lat, lon], tooltip=node).add_to(m)
 
     # Adicionar a rota do menor caminho ao mapa
+    # funcao dijkstra_path
     for i in range(len(caminho_minimo) - 1):
         origem = caminho_minimo[i]
         destino = caminho_minimo[i + 1]
