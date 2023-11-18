@@ -52,6 +52,19 @@ def calcular_rota():
             ('ZIG', 'G', 1),
             ('G', 'H', 1),
             ('H', 'I', 1),
+            ('A', 'J', 3),
+            ('J', 'K', 4),
+            ('K', 'L', 3),
+            ('L', 'M', 6),
+            ('M', 'R', 7),
+            ('R', 'S', 9),
+            ('S', 'I', 12),
+            ('B', 'K', 11),
+            ('C', 'L', 9),
+            ('D', 'M', 12),
+            ('E', 'N', 8),
+            ('F', 'O', 5),
+            ('F2', 'P', 4),
         ]
     elif modo == 'a_pe':
         arestas = [
@@ -62,6 +75,25 @@ def calcular_rota():
             ('M', 'R', 1),
             ('R', 'S', 1),
             ('S', 'I', 1),
+            ('A', 'B', 2),
+            ('B', 'K', 2),
+            ('B', 'C', 3),
+            ('C', 'L', 2),
+            ('C', 'D', 2),
+            ('D', 'E', 5),
+            ('D', 'M', 2),
+            ('E', 'F', 3),
+            ('E', 'N', 2),
+            ('M', 'N', 4),
+            ('N', 'O', 2),
+            ('O', 'P', 3),
+            ('F', 'F2', 3),
+            ('F', 'O', 2),
+            ('F2', 'P', 4),
+            ('F2', 'ZIG', 5),
+            ('ZIG', 'G', 3),
+            ('G', 'H', 4),
+            ('H', 'I', 2),
         ]
 
     G.add_weighted_edges_from(arestas)
@@ -91,28 +123,40 @@ def calcular_rota():
     m.save(map_file)
 
     # Abrir o arquivo HTML no Google Chrome
-    chrome_path = "C:/Program Files/Google/Chrome/Application/chrome.exe"  # Altere o caminho do Chrome conforme necessário
-    webbrowser.register('chrome', None, webbrowser.BackgroundBrowser(chrome_path))
-    webbrowser.get('chrome').open('file://' + map_file, new=2)
+    #chrome_path = "C:/Program Files/Google/Chrome/Application/chrome.exe"  # Altere o caminho do Chrome conforme necessário
+    #webbrowser.register('chrome', None, webbrowser.BackgroundBrowser(chrome_path))
+    #webbrowser.get('chrome').open('file://' + map_file, new=2)
+    
+    # Abre o arquivo em um navegador padrão
+    webbrowser.open(f'file://{os.path.realpath(map_file)}', new=2)
 
 # Função para encontrar o menor caminho (BFS personalizado)
 def encontrar_menor_caminho(G, origem, destino, modo):
-    fila = [(origem, [origem])]
+    fila = [(origem, [origem], 0)]  # adicione um terceiro elemento à tupla para armazenar o peso total
     visitados = set()
 
     while fila:
-        (no, caminho) = fila.pop(0)
+        # Ordene a fila com base no peso total acumulado até agora
+        fila.sort(key=lambda x: x[2])
+
+        (no, caminho, peso_total) = fila.pop(0)
 
         if no not in visitados:
+            visitados.add(no)
+
+            if no == destino:
+                return caminho
+
             vizinhos = G[no]
             for vizinho in vizinhos:
                 peso_aresta = G[no][vizinho]['weight']
-                if vizinho == destino:
-                    return caminho + [vizinho]
-                else:
-                    fila.append((vizinho, caminho + [vizinho]))
+                peso_aresta_modificado = peso_aresta  # ajuste conforme necessário
 
-            visitados.add(no)
+                if vizinho not in visitados:
+                    novo_peso_total = peso_total + peso_aresta_modificado
+                    fila.append((vizinho, caminho + [vizinho], novo_peso_total))
+
+    return None  # Se não encontrar um caminho, retorna None
 
 # Função para mostrar o grafo com Folium
 def mostrar_grafo():
@@ -142,33 +186,31 @@ def mostrar_grafo():
 
     arestas = [
             ('A', 'J', 1),
-            ('C', 'L', 2),
-            ('B', 'K', 2),
-            ('D', 'M', 3),
             ('J', 'K', 1),
             ('K', 'L', 1),
             ('L', 'M', 1),
             ('M', 'R', 1),
-            ('M', 'N', 1),
-            ('M', 'D', 4),
-            ('E', 'N', 2),
-            ('N', 'O', 3),
-            ('F', 'O', 3),
-            ('O', 'P', 1),
-            ('P', 'F2', 1),
             ('R', 'S', 1),
             ('S', 'I', 1),
-
-            ('A', 'B', 3),
-            ('B', 'C', 2),
-            ('C', 'D', 4),
-            ('D', 'E', 4),
-            ('E', 'F', 2),
+            ('A', 'B', 2),
+            ('B', 'K', 2),
+            ('B', 'C', 3),
+            ('C', 'L', 2),
+            ('C', 'D', 2),
+            ('D', 'E', 5),
+            ('D', 'M', 2),
+            ('E', 'F', 3),
+            ('E', 'N', 2),
+            ('M', 'N', 4),
+            ('N', 'O', 2),
+            ('O', 'P', 3),
             ('F', 'F2', 3),
-            ('F2', 'ZIG', 2),
+            ('F', 'O', 2),
+            ('F2', 'P', 4),
+            ('F2', 'ZIG', 5),
             ('ZIG', 'G', 3),
-            ('G', 'H', 5),
-            ('H', 'I', 4)
+            ('G', 'H', 4),
+            ('H', 'I', 2),
         ]
 
     m = folium.Map(location=list(coordenadas.values())[0], zoom_start=15)
@@ -186,6 +228,7 @@ def mostrar_grafo():
 
     # Exiba o mapa
     m.save('grafo-rotas.html')
+    webbrowser.open(f'file://{os.path.realpath("grafo-rotas.html")}', new=2)
 
 # Chame a função para exibir o grafo
 #mostrar_grafo()
@@ -223,7 +266,6 @@ calcular_button.pack()
 # Botão para exibir o grafo
 mostrar_grafo = tk.Button(root, text="Exibir Grafo", command=mostrar_grafo)
 mostrar_grafo.pack()
-
 
 # Inicie a interface gráfica
 root.mainloop()
