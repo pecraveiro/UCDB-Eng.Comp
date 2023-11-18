@@ -1,50 +1,50 @@
-# Roteamento de Menor Caminho com NetworkX e Folium
+# Calculadora de Rotas Atividade Avaliativa Google Maps
 
-Este é um programa Python que utiliza as bibliotecas NetworkX e Folium para calcular e visualizar o menor caminho entre dois pontos em um mapa da cidade. O programa permite ao usuário escolher entre dois modos de transporte: de carro ou a pé, e calcula o menor caminho com base nas coordenadas dos pontos e nas arestas com pesos. Desenvolvido por [Pedro M. S. Craveiro](https://linkedin.com/in/pecraveiro)
+## Descrição
+
+Este código Python implementa uma calculadora de rotas usando as seguintes bibliotecas:
+
+- **NetworkX:** Manipulação e representação de grafos.
+- **Folium:** Criação de mapas interativos para visualização do grafo e da rota.
+- **Tkinter:** Criação da interface gráfica.
+- **webbrowser:** Abertura de arquivos HTML no navegador.
+
+O sistema permite calcular o menor caminho entre dois pontos em um mapa da cidade, considerando diferentes modos de transporte (carro ou a pé).
+
+## Funcionalidades
+
+- **Cálculo de Rota:** Calcula o menor caminho no grafo, considerando o modo de transporte selecionado.
+- **Visualização do Grafo:** Exibe o mapa da cidade como um grafo, mostrando as conexões entre os pontos.
+
+## Estrutura do Código
+
+O código é dividido em três partes principais:
+
+1. **Funções de Cálculo de Rota:**
+   - `calcular_rota()`: Calcula o menor caminho no grafo, considerando o modo de transporte selecionado.
+   - `encontrar_menor_caminho()`: Implementa uma busca em largura personalizada para encontrar o menor caminho no grafo.
+
+2. **Função de Visualização do Grafo:**
+   - `mostrar_grafo()`: Gera um mapa interativo mostrando os pontos e conexões do grafo.
+
+3. **Configuração da Interface Gráfica (Tkinter):**
+   - Configuração da janela principal.
+   - Seleção do modo de transporte (carro ou a pé) por meio de botões de rádio.
+   - Botões para calcular a rota e exibir o grafo.
+
+## Utilização
+
+1. Execute o código em um ambiente Python.
+2. Selecione o modo de transporte desejado (carro ou a pé).
+3. Clique no botão "Calcular Rota" para encontrar o menor caminho entre dois pontos no mapa.
+4. Clique no botão "Exibir Grafo" para visualizar o mapa da cidade como um grafo.
 
 ## Requisitos
 
-- Python 3.x
-- Bibliotecas: NetworkX, Folium
-
-## Instruções de Uso
-
-1. Execute o programa em seu ambiente Python.
-
-2. O programa solicitará que você escolha o modo de transporte entre "carro" ou "a_pe". Digite sua escolha e pressione Enter.
-
-3. O programa calculará o menor caminho com base no modo de transporte selecionado. A rota será destacada em verde no mapa.
-
-4. O mapa será aberto no navegador Google Chrome, exibindo a rota do menor caminho entre os pontos de partida e destino.
-
-## Exemplo de Uso
-
-Aqui está um exemplo de uso do programa:
-
-1. Execute o programa e escolha o modo de transporte digitando "carro" ou "a_pe".
-
-2. O programa calculará o menor caminho com base no modo de transporte escolhido.
-
-3. O mapa será aberto no Google Chrome, mostrando a rota do menor caminho destacada em verde.
-
-4. Você pode fechar o navegador quando terminar de visualizar a rota.
+- Instalar as bibliotecas e dependencias necessárias.
 
 ## Observações
 
-- Certifique-se de ter os requisitos instalados antes de executar o programa.
-
-- Certifique-se de fornecer um caminho absoluto para o executável do Google Chrome (variável `chrome_path`) no código, conforme necessário.
-
-- As coordenadas dos pontos e as arestas com pesos são definidas no código. Você pode personalizá-las de acordo com seu próprio mapa da cidade.
-
-- O programa utiliza a biblioteca Folium para criar o mapa interativo e a biblioteca NetworkX para calcular o menor caminho.
-
-- Este programa é uma demonstração simples de roteamento de menor caminho e pode ser expandido para casos de uso mais complexos.
-
-- Certifique-se de respeitar as leis de trânsito e regulamentos ao usar as rotas geradas pelo programa.
-
-## Considerações Finais
-
-Este programa é uma introdução ao cálculo de rotas de menor caminho com Python e pode ser útil para planejamento de viagens, logística e muito mais. Sinta-se à vontade para personalizar o código e expandi-lo para atender às suas necessidades específicas.
-
-Lembre-se de que este é um exemplo simplificado e que há muitas outras funcionalidades e otimizações possíveis ao lidar com sistemas de roteamento de maior escala.
+- Certifique-se de ter as bibliotecas necessárias instaladas no seu ambiente Python.
+- Os pontos no mapa (vértices) e as conexões entre eles (arestas) estão definidos no código e podem ser ajustados conforme necessário.
+- O resultado do cálculo da rota é salvo em um arquivo HTML, que é automaticamente aberto no navegador padrão.
