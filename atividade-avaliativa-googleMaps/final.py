@@ -121,11 +121,6 @@ def calcular_rota():
     # Salvar o mapa em um arquivo HTML com caminho absoluto
     map_file = os.path.abspath(f'rota_menor_caminho_{modo}.html')
     m.save(map_file)
-
-    # Abrir o arquivo HTML no Google Chrome
-    #chrome_path = "C:/Program Files/Google/Chrome/Application/chrome.exe"  # Altere o caminho do Chrome conforme necessário
-    #webbrowser.register('chrome', None, webbrowser.BackgroundBrowser(chrome_path))
-    #webbrowser.get('chrome').open('file://' + map_file, new=2)
     
     # Abre o arquivo em um navegador padrão
     webbrowser.open(f'file://{os.path.realpath(map_file)}', new=2)
