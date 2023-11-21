@@ -14,6 +14,10 @@ O programa permite a criação de um grafo, a adição e remoção de vértices 
 - Bibliotecas: NetworkX, Pyvis, Matplotlib
 - Um navegador da web para visualizar o grafo
 
+## Setup
+- Instale as dependências digitando no terminal, dentro do diretório atividade-avaliativa-grafos/: `pip install networkx pyvis matplotlib`
+- Instale as dependências digitando no terminal, dentro do diretório atividade-avaliativa-grafos/telegramCSVeTXT: `pip install python-telegram-bot==13.13 pillow`
+
 ## Instruções de Uso
 
 1. Execute o programa em seu ambiente Python.

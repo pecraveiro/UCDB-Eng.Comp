@@ -1,0 +1,2 @@
+## Setup
+- Instale as dependências digitando no terminal, dentro do diretório atividade-avaliativa-grafos/telegramCSVeTXT: `pip install python-telegram-bot==13.13 pillow`
