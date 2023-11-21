@@ -1,0 +1,2 @@
+## Setup
+- Instale as dependências digitando no terminal, dentro do diretório /atividade-avaliativa-googleMaps: `pip install networkx folium tk`

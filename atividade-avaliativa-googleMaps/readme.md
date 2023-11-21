@@ -12,8 +12,7 @@ Este código Python implementa uma calculadora de rotas usando as seguintes bibl
 O sistema permite calcular o menor caminho entre dois pontos em um mapa da cidade, considerando diferentes modos de transporte (carro ou a pé).
 
 ## Setup
-- Instale as dependências digitando no terminal, dentro do diretório /atividade-avaliativa-googleMaps:
-- `pip install networkx folium tk`
+- Instale as dependências digitando no terminal, dentro do diretório /atividade-avaliativa-googleMaps: `pip install networkx folium tk`
 
 ## Funcionalidades
 
