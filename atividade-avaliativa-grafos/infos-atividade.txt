@@ -1,6 +1,0 @@
-Criar um programa que permite que o usuário entre com os vértices e arestas de um grafo e mostre diversas propriedades deste 
-gráfico (quanto mais propriedade, mais PIC$, a expectativa é que mostre ao menos umas 10 propriedades). 
-Entre as propriedades que podem ser apresentadas estão: grau máximo, grau mínimo, número cromático, raio, diâmetro, perímetro, 
-árvore geradora mínima, etc. O programa pode ainda indicar se o grafo é conexo, acíclico, completo, Euleriano, Hamiltoniano, 
-etc (isso também são propriedades). O programa deve oferecer ao usuário a possibilidade de abrir grafos já prontos que ilustrem 
-algumas destas propriedade.

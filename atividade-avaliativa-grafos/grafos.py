@@ -1,3 +1,12 @@
+# Atividade Avaliativa Grafos
+# Aluno: Pedro Muhamad Suleiman Craveiro
+# RA: 193934
+# Curso: Engenharia de Computação
+# Disciplina: Matemática Discreta
+# Professor: Hemerson Pistori
+# Data de Entrega: 21/11/2023
+# Descrição: O projeto consiste na criação de um programa em que o usuário pode importar um grafo e/ou criá-lo a partir do menu interativo que o algoritmo oferece
+
 import networkx as nx
 from pyvis.network import Network
 import matplotlib.pyplot as plt

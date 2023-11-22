@@ -1,3 +1,14 @@
+# Atividade Avaliativa Grafos
+# Aluno: Pedro Muhamad Suleiman Craveiro
+# RA: 193934
+# Curso: Engenharia de Computação
+# Disciplina: Matemática Discreta
+# Professor: Hemerson Pistori
+# Data de Entrega: 21/11/2023
+# Descrição: Bot para armazenar arquivos CSV e TXT enviados pelo Telegram.
+
+#Telegram Token 6649993652:AAFUVW-v5K0HjUaLBkDtQNF5pZAXwyagwS4
+
 import os
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler, CallbackContext
@@ -54,6 +65,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-#6649993652:AAFUVW-v5K0HjUaLBkDtQNF5pZAXwyagwS4

@@ -1,3 +1,12 @@
+# Atividade Avaliativa Grafos
+# Aluno: Pedro Muhamad Suleiman Craveiro
+# RA: 193934
+# Curso: Engenharia de Computação
+# Disciplina: Matemática Discreta
+# Professor: Hemerson Pistori
+# Data de Entrega: 21/11/2023
+# Descrição: O projeto consiste na criação de um programa para encontrar o menor caminho entre dois pontos de um mapa utilizando o algoritmo de busca pelo menor caminho em grafos com pesos.
+
 import networkx as nx
 import folium
 import webbrowser
