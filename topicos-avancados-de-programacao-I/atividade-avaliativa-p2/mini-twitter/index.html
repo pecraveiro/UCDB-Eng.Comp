@@ -12,82 +12,7 @@
         href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐦</text></svg>">
 
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <style>
-        /* Estilos customizados essenciais */
-        .post-item {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-left: 4px solid #3b82f6;
-        }
-
-        .post-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
-        }
-
-        .post-author {
-            font-weight: bold;
-            color: #1f2937;
-        }
-
-        .post-date {
-            font-size: 0.875rem;
-            color: #6b7280;
-        }
-
-        .post-content {
-            color: #374151;
-            margin-bottom: 0.5rem;
-        }
-
-        .post-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .delete-btn {
-            background: #ef4444;
-            color: white;
-            border: none;
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.75rem;
-            transition: background-color 0.2s;
-        }
-
-        .delete-btn:hover {
-            background: #dc2626;
-        }
-
-        .fade-in {
-            animation: fadeIn 0.3s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Responsividade básica */
-        @media (max-width: 768px) {
-            .post-item {
-                padding: 0.75rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body class="bg-gray-100 min-h-screen">
@@ -97,15 +22,18 @@
             <div id="nav-buttons" class="hidden">
                 <div class="flex space-x-2">
                     <button id="feed-btn"
-                        class="bg-gray-100 text-gray-700 px-4 py-2 rounded hover:bg-gray-200 transition-colors">
+                        class="bg-gray-100 text-gray-700 px-4 py-2 rounded hover:bg-gray-200 transition-colors cursor-pointer"
+                        aria-label="Ir para o feed de posts">
                         🏠 Feed
                     </button>
                     <button id="profile-btn"
-                        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors">
+                        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors cursor-pointer"
+                        aria-label="Ir para o perfil do usuário">
                         👤 Perfil
                     </button>
                     <button id="logout-btn"
-                        class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors">
+                        class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors cursor-pointer"
+                        aria-label="Fazer logout e sair da aplicação">
                         🚪 Sair
                     </button>
                 </div>
@@ -122,11 +50,13 @@
             <div class="mb-6">
                 <div class="flex space-x-1 mb-6 bg-gray-100 rounded-lg p-1">
                     <button id="login-tab"
-                        class="flex-1 py-3 px-4 bg-blue-500 text-white rounded-md font-medium transition-all shadow-sm">
+                        class="flex-1 py-3 px-4 bg-blue-500 text-white rounded-md font-medium transition-all shadow-sm cursor-pointer"
+                        aria-label="Alternar para formulário de login">
                         🔑 Fazer Login
                     </button>
                     <button id="register-tab"
-                        class="flex-1 py-3 px-4 bg-transparent text-gray-600 rounded-md font-medium transition-all hover:bg-white">
+                        class="flex-1 py-3 px-4 bg-transparent text-gray-600 rounded-md font-medium transition-all hover:bg-white cursor-pointer"
+                        aria-label="Alternar para formulário de registro">
                         ✨ Criar Conta
                     </button>
                 </div>
@@ -153,7 +83,8 @@
                             placeholder="Sua senha" required>
                     </div>
                     <button type="submit"
-                        class="w-full bg-blue-500 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-600 transition-colors">
+                        class="w-full bg-blue-500 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-600 transition-colors cursor-pointer"
+                        aria-label="Confirmar login com email e senha">
                         🔑 Entrar Agora
                     </button>
                 </form>
@@ -191,7 +122,8 @@
                     </div>
 
                     <button type="submit"
-                        class="w-full bg-green-500 text-white py-3 px-4 rounded-lg font-semibold hover:bg-green-600 transition-colors">
+                        class="w-full bg-green-500 text-white py-3 px-4 rounded-lg font-semibold hover:bg-green-600 transition-colors cursor-pointer"
+                        aria-label="Criar nova conta com os dados informados">
                         ✨ Criar Minha Conta Agora
                     </button>
                 </form>
@@ -202,59 +134,146 @@
             <div class="bg-white rounded-lg shadow-md p-6 mb-6">
                 <h2 class="text-lg font-bold mb-4">O que está acontecendo?</h2>
                 <form id="post-form">
-                    <textarea id="post-content" class="w-full p-3 border border-gray-300 rounded resize-none" rows="3"
+                    <textarea id="post-textarea" class="w-full p-3 border border-gray-300 rounded resize-none" rows="3"
                         placeholder="Digite sua mensagem..." maxlength="280"></textarea>
                     <div class="flex justify-between items-center mt-2">
-                        <span id="char-count" class="text-gray-500 text-sm">0/280</span>
-                        <button type="submit"
-                            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Postar</button>
+                        <span id="char-counter" class="text-gray-500 text-sm">280/280</span>
+                        <button type="submit" id="post-button"
+                            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                            aria-label="Publicar novo post no feed">Publicar</button>
                     </div>
                 </form>
             </div>
 
-            <div id="posts-container">
+            <!-- Estados de loading e empty para posts -->
+            <div id="loading-posts" class="hidden bg-white rounded-lg shadow-sm p-8 text-center">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-4"></div>
+                <p class="text-gray-500">Carregando posts...</p>
+            </div>
+
+            <div id="empty-posts" class="hidden bg-white rounded-lg shadow-sm p-8 text-center">
+                <div class="text-6xl mb-4">📝</div>
+                <h3 class="text-lg font-semibold text-gray-700 mb-2">Nenhum post ainda</h3>
+                <p class="text-gray-500">Seja o primeiro a compartilhar algo!</p>
+            </div>
+
+            <!-- Container para lista de posts -->
+            <div id="posts-list" class="space-y-4">
+                <!-- Posts serão inseridos aqui dinamicamente -->
             </div>
         </div>
 
         <div id="profile-screen" class="hidden">
-            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-                <h2 class="text-xl font-bold mb-4">Meu Perfil</h2>
-                <form id="profile-form">
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-gray-700 text-sm font-bold mb-2">Nome de Usuário</label>
-                            <input type="text" id="profile-username"
-                                class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 text-sm font-bold mb-2">Email</label>
-                            <input type="email" id="profile-email"
-                                class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500">
-                        </div>
-                        <div class="flex space-x-4">
-                            <button type="submit"
-                                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Salvar</button>
-                            <button type="button" id="back-to-feed"
-                                class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Voltar</button>
-                        </div>
+            <!-- Estados de loading e erro do perfil -->
+            <div id="profile-loading" class="hidden bg-white rounded-lg shadow-md p-8 text-center">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-4"></div>
+                <p class="text-gray-500">Carregando perfil...</p>
+            </div>
+
+            <div id="profile-error" class="hidden bg-white rounded-lg shadow-md p-6 mb-6">
+                <div class="text-center text-red-500">
+                    <div class="text-4xl mb-4">⚠️</div>
+                    <h3 class="text-lg font-semibold mb-2">Erro ao carregar perfil</h3>
+                    <p id="profile-error-message" class="text-sm">Ocorreu um erro inesperado</p>
+                </div>
+            </div>
+
+            <!-- Informações do perfil - modo visualização -->
+            <div id="profile-info" class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <div class="text-center mb-6">
+                    <div
+                        class="w-20 h-20 bg-blue-500 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
+                        U
+                    </div>
+                    <h2 id="profile-username" class="text-xl font-bold text-gray-800 mb-2">@username</h2>
+                    <p id="profile-email" class="text-gray-600 mb-2">email@example.com</p>
+                    <p id="profile-join-date" class="text-sm text-gray-500">Membro desde janeiro de 2024</p>
+                </div>
+                <div class="text-center">
+                    <button id="edit-profile-btn"
+                        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors cursor-pointer"
+                        aria-label="Editar informações do perfil">
+                        ✏️ Editar Perfil
+                    </button>
+                </div>
+            </div>
+
+            <!-- Formulário de edição do perfil -->
+            <div id="edit-profile-form" class="hidden bg-white rounded-lg shadow-md p-6 mb-6">
+                <h2 class="text-xl font-bold mb-4">Editar Perfil</h2>
+                <form class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Nome de Usuário</label>
+                        <input type="text" id="edit-username"
+                            class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                        <input type="email" id="edit-email"
+                            class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div class="flex space-x-4">
+                        <button type="button" id="save-profile-btn"
+                            class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors cursor-pointer"
+                            aria-label="Salvar alterações no perfil">
+                            💾 Salvar
+                        </button>
+                        <button type="button" id="cancel-edit-btn"
+                            class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition-colors cursor-pointer"
+                            aria-label="Cancelar edição do perfil">
+                            ❌ Cancelar
+                        </button>
                     </div>
                 </form>
             </div>
 
-            <div class="bg-white rounded-lg shadow-md p-6">
-                <h3 class="text-lg font-bold mb-4">Minhas Postagens</h3>
-                <div id="my-posts-container">
+            <!-- Estatísticas dos posts -->
+            <div id="posts-stats">
+                <!-- Estatísticas serão inseridas aqui -->
+            </div>
+
+            <!-- Posts do usuário -->
+            <div id="user-posts" class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-lg font-bold mb-4">Suas Publicações</h3>
+
+                <!-- Loading dos posts do usuário -->
+                <div id="user-posts-loading" class="hidden text-center py-8">
+                    <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500 mx-auto mb-4"></div>
+                    <p class="text-gray-500 text-sm">Carregando suas publicações...</p>
+                </div>
+
+                <!-- Estado vazio -->
+                <div id="no-user-posts" class="hidden text-center py-8">
+                    <div class="text-4xl mb-4">📝</div>
+                    <h4 class="text-lg font-semibold text-gray-700 mb-2">Nenhuma publicação ainda</h4>
+                    <p class="text-gray-500 text-sm">Compartilhe seus primeiros pensamentos!</p>
+                </div>
+
+                <!-- Lista de posts do usuário -->
+                <div id="user-posts-list" class="space-y-4">
+                    <!-- Posts do usuário serão inseridos aqui -->
                 </div>
             </div>
         </div>
     </div>
 
 
+    <!-- Repositories -->
     <script src="js/repositories/ApiRepository.js"></script>
     <script src="js/repositories/StorageRepository.js"></script>
+
+    <!-- Views - Separação de Responsabilidades -->
+    <script src="js/views/BaseView.js"></script>
+    <script src="js/views/AuthView.js"></script>
+    <script src="js/views/FeedView.js"></script>
+    <script src="js/views/ProfileView.js"></script>
+
+    <!-- Controllers -->
     <script src="js/controllers/AuthController.js"></script>
     <script src="js/controllers/PostController.js"></script>
     <script src="js/controllers/UserController.js"></script>
+
+    <!-- App Initialization -->
     <script src="js/app.js"></script>
 </body>
 
